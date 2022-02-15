@@ -58,12 +58,12 @@ router.post('/onSignUp', (req, res) => {// 회원가입을 위한 리퀘스트�
         conn.query("SELECT COUNT(id) AS result FROM users WHERE id = ?", user_id)
         .then(rows => {// DB로 쿼리를 날린 결과로 돌아온 데이터를 활용해서 이후 코드를 실행함
             if(rows[0].result != 0) {// DB에 이미 존재하는 id였을 경우 실행하는 코드
-                res.send({"message": "입력하신 id가 이미 존재합니다."});
+                res.send("error");
             }
             else {// 전달받은 데이터가 DB에 중복으로 없어서 바로 추가하면 되는 경우
-                const params = [user_id, user_pw, user_name, user_id];
-                conn.query("INSERT INTO users (id, pw, name) VALUES(?, ?, ?) AS ?", params);// 중복 id가 없으니 DB에 데이터를 저장해줌
-                conn.query("SELECT * AS")
+                const params = [user_id, user_pw, user_name];
+                conn.query("INSERT INTO users (id, pw, name) VALUES(?, ?, ?)", params);// 중복 id가 없으니 DB에 데이터를 저장해줌
+                res.send("signed up");
             }
         });
     });
